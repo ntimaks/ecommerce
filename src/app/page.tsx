@@ -29,6 +29,7 @@ export default function HomePage() {
   return (
     <main >
       <div className="w-screen h-screen bg-black relative">
+
         <Image
           src={images[currentImage as keyof typeof images]}
           alt="Gallery image"
@@ -36,15 +37,15 @@ export default function HomePage() {
           className="object-cover"
           priority
         />
-        {/* Use NavBar component */}
-        <NavBar />
 
+
+        <NavBar />
         <div className="absolute bottom-8 left-8 flex flex-col gap-2">
           {Object.entries(buttonLabels).map(([key, label]) => (
             <button
               key={key}
               onClick={() => setCurrentImage(key)}
-              className="text-white text-4xl md:text-7xl hover:text-gray-300 text-left"
+              className="font-regular text-white text-4xl md:text-7xl hover:text-gray-300 text-left"
             >
               {label}
             </button>

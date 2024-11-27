@@ -1,5 +1,5 @@
 import React from 'react';
-import Hamburger from "../components/hamburger";
+import Hamburger from "../../public/icons/hamburger";
 import SearchPopup from './SearchPopop';
 import Menu from './Menu';
 

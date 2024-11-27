@@ -1,4 +1,4 @@
-import Hamburger from "./hamburger";
+import Hamburger from "../../public/icons/hamburger";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 
 
