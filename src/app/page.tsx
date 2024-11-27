@@ -37,9 +37,12 @@ export default function HomePage() {
           className="object-cover"
           priority
         />
+        <div id="interlaced"></div>
+        <div id="glare"></div>
 
 
         <NavBar />
+
         <div className="absolute bottom-8 left-8 flex flex-col gap-2">
           {Object.entries(buttonLabels).map(([key, label]) => (
             <button
