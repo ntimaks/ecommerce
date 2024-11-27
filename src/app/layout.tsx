@@ -3,6 +3,7 @@ import "i/styles/globals.css";
 import { type Metadata } from "next";
 import { ThemeProvider } from "i/components/theme-provider";
 import { Archivo } from 'next/font/google'
+import NavBar from "i/components/NavBar";
 
 const archivo = Archivo({ subsets: ['latin'] })
 
@@ -24,7 +25,8 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-        >
+        > 
+        <NavBar />
           {children}
         </ThemeProvider>
       </body>

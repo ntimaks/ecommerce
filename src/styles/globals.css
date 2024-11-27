@@ -27,7 +27,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -53,7 +53,7 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 @layer base {
@@ -67,15 +67,23 @@
 
 /* low-resolution screen overlay interlacing */
 @keyframes lines {
-  0% {background-position: 0px 0px}
-  50% {background-position: 0px 0px}
-  51% {background-position: 0px 2px}
-  100% {background-position: 0px 2px}
+  0% {
+    background-position: 0px 0px;
+  }
+  50% {
+    background-position: 0px 0px;
+  }
+  51% {
+    background-position: 0px 2px;
+  }
+  100% {
+    background-position: 0px 2px;
+  }
 }
 
 #interlaced {
   position: fixed;
-  background: repeating-linear-gradient(transparent 0px 1px, hsl(154 0% 0%/.3) 3px 4px);
+  background: repeating-linear-gradient(transparent 0px 1px, hsl(154 0% 0%/0.3) 3px 4px);
   top: 0;
   left: 0;
   right: 0;
@@ -85,13 +93,27 @@
   animation: lines 0.066666666s linear infinite;
 }
 
-  @keyframes blink {
-    0% {opacity: 0}
-    30% {opacity: 1}
-    70% {opacity: 1}
-    100% {opacity: 0}
+@keyframes blink {
+  0% {
+    opacity: 0;
   }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
-  .blink {
-    animation: blink 0.4s linear infinite;
-  }
+.blink {
+  animation: blink 0.4s linear infinite;
+}
+
+.bg-store {
+  background-image: url('/images/image1.png');
+  background-size: cover;
+  background-position: center;
+}
