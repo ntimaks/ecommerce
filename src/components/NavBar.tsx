@@ -5,7 +5,7 @@ import Menu from './Menu';
 
 const NavBar = () => {
   return (
-    <nav className="absolute top-8 w-full flex justify-between px-8">
+    <nav className="absolute z-10 top-8 w-full flex justify-between px-8">
       <div>
         <Menu />
       </div>
