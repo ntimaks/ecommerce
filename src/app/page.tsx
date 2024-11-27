@@ -2,36 +2,16 @@
 import Image from "next/image";
 import { useState } from "react";
 import NavBar from "i/components/NavBar";
-
-
+import imageDetails from "./constants/imageDetails.json";
 
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState("aorist");
-
-  const images = {
-    aorist: "/images/aorist.png",
-    image2: "/images/bumba.png",
-    image3: "/images/haine.png",
-    image4: "/images/plava.png",
-    image5: "/images/rainis.png",
-    image6: "/images/tepikis.png"
-  };
-
-  const buttonLabels = {
-    aorist: "Aorist",
-    image2: "Bumba",
-    image3: "Haine",
-    image4: "Plava",
-    image5: "Rainis",
-    image6: "Tepikis"
-  };
-
   return (
-    <main >
+    <main>
       <div className="w-screen h-screen bg-black relative">
 
         <Image
-          src={images[currentImage as keyof typeof images]}
+          src={imageDetails[currentImage as keyof typeof imageDetails].src}
           alt="Gallery image"
           fill
           className="object-cover"
@@ -40,11 +20,10 @@ export default function HomePage() {
         <div id="interlaced"></div>
         <div id="glare"></div>
 
-
         <NavBar />
 
         <div className="absolute bottom-8 left-8 flex flex-col gap-2">
-          {Object.entries(buttonLabels).map(([key, label]) => (
+          {Object.entries(imageDetails).map(([key, { label }]) => (
             <button
               key={key}
               onClick={() => setCurrentImage(key)}
