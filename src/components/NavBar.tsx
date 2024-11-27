@@ -1,15 +1,16 @@
 import React from 'react';
-import Search from "../../public/icons/search";
 import Hamburger from "../components/hamburger";
+import SearchPopup from './SearchPopop';
+import Menu from './Menu';
 
 const NavBar = () => {
   return (
     <nav className="absolute top-8 w-full flex justify-between px-8">
       <div>
-        <Hamburger size={50} />
+        <Menu />
       </div>
       <div>
-        <Search size={50} />
+        <SearchPopup />
       </div>
     </nav>
   );

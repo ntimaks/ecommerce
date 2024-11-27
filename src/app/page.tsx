@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useState } from "react";
 import NavBar from "i/components/NavBar";
 
+
+
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState("aorist");
 
@@ -25,7 +27,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex">
+    <main >
       <div className="w-screen h-screen bg-black relative">
         <Image
           src={images[currentImage as keyof typeof images]}
@@ -42,7 +44,7 @@ export default function HomePage() {
             <button
               key={key}
               onClick={() => setCurrentImage(key)}
-              className="text-white text-7xl hover:text-gray-300 text-left"
+              className="text-white text-4xl md:text-7xl hover:text-gray-300 text-left"
             >
               {label}
             </button>
