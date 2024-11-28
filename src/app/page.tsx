@@ -1,15 +1,26 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import imageDetails from './constants/imageDetails.json';
 import ImageDisplay from 'i/components/Hero/ImageDisplay';
+import { ProductDB } from 'i/lib/type';
+import ProductDetails from 'i/components/Store/ProductDetails';
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState('aorist');
+  const [products, setProducts] = useState<ProductDB[]>([]);
+  const [productIndex, setProductIndex] = useState(0);
 
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await fetch('/api/products');
+      const data: ProductDB[] = (await response.json()) as ProductDB[];
+      setProducts(data);
+    }
+    fetchProducts().catch(console.error);
+  }, []);
   return (
     <main>
       <div className="relative h-screen w-screen bg-black">
         <ImageDisplay
-
           src={imageDetails[currentImage as keyof typeof imageDetails].src}
           alt="Gallery image"
           fill
@@ -18,10 +29,13 @@ export default function HomePage() {
         />
 
         <div className="absolute bottom-8 left-8 flex flex-col gap-2">
-          {Object.entries(imageDetails).map(([key, { label }]) => (
+          {Object.entries(imageDetails).map(([key, { label }], i) => (
             <button
               key={key}
-              onMouseEnter={() => setCurrentImage(key)}
+              onMouseEnter={() => {
+                setCurrentImage(key);
+                setProductIndex(i);
+              }}
               className="font-regular z-[2] text-left text-4xl text-white hover:text-gray-300 md:text-7xl"
             >
               {label}
@@ -29,6 +43,8 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+      
+      {products.length > 0 ? <ProductDetails product={products[productIndex]} /> : <div>loading</div>}
     </main>
   );
 }
