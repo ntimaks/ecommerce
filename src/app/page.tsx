@@ -9,7 +9,7 @@ export default function HomePage() {
     <main>
       <div className="relative h-screen w-screen bg-black">
         <ImageDisplay
-         
+
           src={imageDetails[currentImage as keyof typeof imageDetails].src}
           alt="Gallery image"
           fill
@@ -21,7 +21,6 @@ export default function HomePage() {
           {Object.entries(imageDetails).map(([key, { label }]) => (
             <button
               key={key}
-              // onClick={() => setCurrentImage(key)}
               onMouseEnter={() => setCurrentImage(key)}
               className="font-regular z-[2] text-left text-4xl text-white hover:text-gray-300 md:text-7xl"
             >

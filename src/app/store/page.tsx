@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { type Product } from 'i/lib/type';
 import ProductListing from 'i/components/Store/ProductListing';
+
+
 export default function Store() {
   const [products, setProducts] = useState<Product[]>([]);
 
