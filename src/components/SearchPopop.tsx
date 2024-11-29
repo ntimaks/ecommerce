@@ -6,7 +6,7 @@ export default function Menu() {
   return (
     <Sheet>
       <SheetTrigger>
-        <Search size={50} />
+        <Search size={50} color="black" />
       </SheetTrigger>
       <SheetContent side="top">
         <SearchBar />

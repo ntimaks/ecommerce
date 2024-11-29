@@ -22,11 +22,11 @@ export default function RootLayout({
       <body>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-        > 
-        <NavBar />
+        >
+          <NavBar />
           {children}
         </ThemeProvider>
       </body>
