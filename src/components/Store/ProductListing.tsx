@@ -11,7 +11,7 @@ export default function ProductListing({ product }: { product: ProductDB }) {
       <div className="relative aspect-square w-full overflow-hidden rounded-md">
         <a href={`${url}/${product.product_id}`} target="_blank" rel="noopener noreferrer">
           <Image
-            src={product.image ?? ''}
+            src={product.images[0] ?? ''}
             alt={product.name}
             width={100}
             height={100}

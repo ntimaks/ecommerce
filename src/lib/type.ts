@@ -19,10 +19,11 @@ export interface ProductDB {
   price: number;
   description: string;
   category: string;
-  image: string | null;
+  images: string[];
   inventory: Stock[];
   reviews: Review[];
 }
+
 
 export interface Stock {
   size: 'XS' | 'S' | 'M' | 'L' | 'XL';
