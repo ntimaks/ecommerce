@@ -8,9 +8,8 @@ import NavBar from "i/components/NavBar";
 const archivo = Archivo({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Aorist App",
-  description: "aorist store",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: "Web Shop App",
+  description: "Web shop store",
 };
 
 export default function RootLayout({

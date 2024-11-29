@@ -14,18 +14,8 @@ interface ProductDetailsProps {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
-    const [iconSize, setIconSize] = useState(50)
 
-    useEffect(() => {
-        setIconSize(window.innerWidth <= 768 ? 30 : 50)
 
-        const handleResize = () => {
-            setIconSize(window.innerWidth <= 768 ? 30 : 50)
-        }
-
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
 
     if (!product) {
         return (
