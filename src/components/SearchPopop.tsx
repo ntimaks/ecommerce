@@ -5,22 +5,10 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { useState, useEffect } from 'react';
 
 export default function SearchPopup() {
-  const [iconSize, setIconSize] = useState(50);
-
-  useEffect(() => {
-    const updateSize = () => {
-      setIconSize(window.innerWidth <= 768 ? 30 : 50);
-    };
-
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-
   return (
     <Sheet>
       <SheetTrigger>
-        <Search size={iconSize} color="black" />
+        <Search size={50} color="black" className="origin-top-right scale-[.60] lg:scale-100" />
       </SheetTrigger>
       <SheetContent side="top">
         <SearchBar />

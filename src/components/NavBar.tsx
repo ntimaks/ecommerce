@@ -1,16 +1,16 @@
 import React from 'react';
-import Hamburger from "../../public/icons/hamburger";
 import SearchPopup from './SearchPopop';
 import Menu from './Menu';
-
+import CartSidebar from './CartSidebar';
 const NavBar = () => {
   return (
-    <nav className="absolute z-10 top-8 w-full flex justify-between px-8">
+    <nav className="fixed top-8 z-10 flex w-full justify-between px-8">
       <div>
         <Menu />
       </div>
-      <div>
+      <div className="flex flex-row items-center gap-2">
         <SearchPopup />
+        <CartSidebar />
       </div>
     </nav>
   );

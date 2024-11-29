@@ -5,29 +5,17 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { useState, useEffect } from 'react';
 
 export default function Menu() {
-  const [iconSize, setIconSize] = useState(50);
-
-  useEffect(() => {
-    const updateSize = () => {
-      setIconSize(window.innerWidth <= 768 ? 30 : 50);
-    };
-
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-
   return (
     <Sheet>
       <SheetTrigger>
-        <Hamburger size={iconSize} color="black" />
+        <Hamburger size={50} color="black" className="origin-top-left scale-[.60] lg:scale-100" />
       </SheetTrigger>
       <SheetContent side="left">
         <h1>MENU</h1>
-        <Link href="/" className="text-base hover:text-gray-600 transition-colors">
+        <Link href="/" className="text-base transition-colors hover:text-gray-600">
           <p className="text-black">Home</p>
         </Link>
-        <Link href="/store" className="text-base hover:text-gray-600 transition-colors">
+        <Link href="/store" className="text-base transition-colors hover:text-gray-600">
           <p className="text-black">Store</p>
         </Link>
       </SheetContent>

@@ -1,8 +1,9 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import imageDetails from './constants/imageDetails.json';
 import ImageDisplay from 'i/components/Hero/ImageDisplay';
-import { ProductDB } from 'i/lib/type';
+import { type ProductDB } from 'i/lib/type';
 import ProductDetails from 'i/components/Store/ProductDetails';
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState('aorist');
@@ -43,7 +44,7 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      
+
       {products.length > 0 ? <ProductDetails product={products[productIndex]} /> : <div>loading</div>}
     </main>
   );

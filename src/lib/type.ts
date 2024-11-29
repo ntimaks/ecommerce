@@ -35,3 +35,10 @@ export interface Review {
   rating: number;
   comment: string;
 }
+
+export interface CartItem {
+  product: ProductDB;
+  image: string | undefined;
+  quantity: number;
+  size: Stock['size'];
+}
