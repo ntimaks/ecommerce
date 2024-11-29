@@ -4,31 +4,13 @@ import { useState } from 'react'
 import { type ProductDB } from 'i/lib/type'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Button from '../Button'
 
 interface ProductDetailsProps {
     product: ProductDB | undefined
 }
 
-function Button({ children, onClick, className = '', variant = 'default' }: {
-    children: React.ReactNode
-    onClick?: () => void
-    className?: string
-    variant?: 'default' | 'outline'
-}) {
-    const baseStyle = "px-4 py-2 rounded-none focus:outline-none transition-colors duration-200"
-    const variantStyle = variant === 'default'
-        ? "bg-black text-white hover:bg-neutral-800"
-        : "bg-white/80 text-black border border-neutral-200 hover:bg-neutral-100"
 
-    return (
-        <button
-            onClick={onClick}
-            className={`${baseStyle} ${variantStyle} ${className}`}
-        >
-            {children}
-        </button>
-    )
-}
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -136,23 +118,3 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
 
 
-// export default function ProductDetails({ product }: ProductDetailsProps) {
-//   return (
-//     <div className="min-h-screen px-8 pt-44">
-//       <div className="grid grid-cols-2 gap-8">
-//         <div className="relative aspect-square">
-//           <Image src={product.image} alt={product.title} fill className="object-contain" priority />
-//         </div>
-//         <div className="flex flex-col gap-4">
-//           <h1 className="text-3xl font-bold">{product.title}</h1>
-//           <p className="text-2xl font-semibold">${product.price.toFixed(2)}</p>
-//           <p className="text-muted-foreground">{product.description}</p>
-//           <div className="flex items-center gap-2">
-//             <span className="text-sm">Rating: {product.rating.rate}/5</span>
-//             <span className="text-sm text-muted-foreground">({product.rating.count} reviews)</span>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
