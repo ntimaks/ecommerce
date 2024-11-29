@@ -1,4 +1,4 @@
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import Hamburger from '../../public/icons/hamburger';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 
@@ -10,11 +10,11 @@ export default function Menu() {
       </SheetTrigger>
       <SheetContent side="left">
         <h1>MENU</h1>
-        <div className="flex flex-col gap-4 pt-8">
-          <Link href="/store" className="text-base hover:text-gray-600 transition-colors">
-            Store
-          </Link>
-        </div>
+
+        <Link href="/store" className="text-base hover:text-gray-600 transition-colors">
+          <p className="text-black">Store</p>
+        </Link>
+
       </SheetContent>
     </Sheet>
   );
