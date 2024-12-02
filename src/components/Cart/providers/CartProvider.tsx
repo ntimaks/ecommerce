@@ -33,16 +33,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
-        (cartItem) => cartItem.product.product_id === item.product.product_id
+        (cartItem) =>
+          cartItem.product.product_id === item.product.product_id &&
+          cartItem.size === item.size
       );
 
       if (existingItemIndex !== -1) {
-        // If the item already exists, update the quantity
         const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex]!.quantity += item.quantity;
+        updatedCart[existingItemIndex] = {
+          ...updatedCart[existingItemIndex]!,
+          quantity: updatedCart[existingItemIndex]!.quantity + item.quantity
+        };
         return updatedCart;
       } else {
-        // If the item does not exist, add it to the cart
         return [...prevCart, item];
       }
     });
