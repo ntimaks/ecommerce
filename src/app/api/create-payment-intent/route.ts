@@ -1,11 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import Stripe from 'stripe';
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request: NextRequest) {
     try {
-        const { amount } = await request.json();
+        const reqBody = await request.json() as { amount: number };
+        const { amount } = reqBody;
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
@@ -16,8 +19,9 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error(error);
-        return NextResponse.json({ error: `Internal server error: ${error}` }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: `Internal server error: ${errorMessage}` }, { status: 500 });
     }
 }

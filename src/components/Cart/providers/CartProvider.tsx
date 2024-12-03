@@ -7,6 +7,7 @@ export interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
+  calculateTotal: () => number;
 }
 
 export const CartContext = createContext<CartContextType>({
@@ -16,6 +17,9 @@ export const CartContext = createContext<CartContextType>({
   },
   removeFromCart: (item: CartItem) => {
     return;
+  },
+  calculateTotal: () => {
+    return 0;
   },
 });
 
@@ -55,5 +59,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart(cart.filter((cartItem) => cartItem.product.product_id !== item.product.product_id));
   };
 
-  return <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>{children}</CartContext.Provider>;
+  const calculateTotal = () => {
+    const total = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    return total > 0 ? total : 0.01; // Ensure total is always greater than 0 to avoid IntegrationError
+  };
+
+  return <CartContext.Provider value={{ cart, addToCart, removeFromCart, calculateTotal }}>{children}</CartContext.Provider>;
 };

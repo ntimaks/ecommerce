@@ -12,19 +12,33 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState<string>();
-    const [clientSecret, setClientSecret] = useState("");
+    const [clientSecret, setClientSecret] = useState<string>('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch("/api/create-payment-intent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
-        })
-            .then((res) => res.json())
-            .then((data) => setClientSecret(data.clientSecret));
+        const fetchPaymentIntent = async () => {
+            try {
+                const response = await fetch("/api/create-payment-intent", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to create payment intent");
+                }
+
+                const data = await response.json() as { clientSecret: string };
+                setClientSecret(data.clientSecret);
+            } catch (error) {
+                console.error("Error fetching payment intent:", error);
+                setErrorMessage("Failed to initiate payment. Please try again later.");
+            }
+        };
+
+        void fetchPaymentIntent();
     }, [amount]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,32 +46,29 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
         setLoading(true);
 
         if (!stripe || !elements) {
-            return;
-        }
-
-        const { error: submitError } = await elements.submit();
-
-        if (submitError) {
-            setErrorMessage(submitError.message);
+            setErrorMessage("Stripe has not loaded properly.");
             setLoading(false);
             return;
         }
 
-        const { error } = await stripe.confirmPayment({
+        const submitResult = await elements.submit();
+
+        if (submitResult.error) {
+            setErrorMessage(submitResult.error.message);
+            setLoading(false);
+            return;
+        }
+
+        const paymentResult = await stripe.confirmPayment({
             elements,
             clientSecret,
             confirmParams: {
-                return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
+                return_url: `${process.env.NEXT_PUBLIC_API_URL}/payment-success?amount=${amount}`,
             },
         });
 
-        if (error) {
-            // This point is only reached if there's an immediate error when
-            // confirming the payment. Show the error to your customer (for example, payment details incomplete)
-            setErrorMessage(error.message);
-        } else {
-            // The payment UI automatically closes with a success animation.
-            // Your customer is redirected to your `return_url`.
+        if (paymentResult.error) {
+            setErrorMessage(paymentResult.error.message);
         }
 
         setLoading(false);
@@ -66,9 +77,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     if (!clientSecret || !stripe || !elements) {
         return (
             <div className="flex items-center justify-center">
-
                 Loading...
-
             </div>
         );
     }

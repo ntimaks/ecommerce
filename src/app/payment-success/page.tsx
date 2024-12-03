@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from 'react';
 
 export default function PaymentSuccess({
@@ -11,9 +10,16 @@ export default function PaymentSuccess({
     const [amount, setAmount] = useState<string>('');
 
     useEffect(() => {
-        searchParams.then(data => {
-            setAmount(data.amount);
-        });
+        const fetchData = async () => {
+            try {
+                const data = await searchParams;
+                setAmount(data.amount);
+            } catch (error) {
+                console.error('Failed to get search params:', error);
+            }
+        };
+
+        fetchData().catch(error => console.error('Error in useEffect:', error));
     }, [searchParams]);
 
     return (
