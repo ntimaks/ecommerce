@@ -34,7 +34,7 @@ export default function Store() {
   // }, []);
 
   return (
-    <div className="min-w-screen max grid min-h-screen grid-cols-5 gap-4 bg-white px-8 pt-44">
+    <div className="min-w-screen max grid min-h-screen grid-cols-2 md:grid-cols-5 gap-4 bg-white px-8 pt-44">
       {products.map((product) => (
         <ProductListing key={product._id} product={product} />
       ))}
