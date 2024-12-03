@@ -1,4 +1,4 @@
-export default function Cart({ size = 50, color, className }: { size?: number; color?: string; className?: string }) {
+export default function Cart({ size, color, className }: { size?: number; color?: string; className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
