@@ -61,7 +61,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const calculateTotal = () => {
     const total = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-    return total > 0 ? total : 0.01; // Ensure total is always greater than 0 to avoid IntegrationError
+    return total > 0 ? total : 1; // Ensure total is always greater than 0 to avoid IntegrationError
   };
 
   return <CartContext.Provider value={{ cart, addToCart, removeFromCart, calculateTotal }}>{children}</CartContext.Provider>;
