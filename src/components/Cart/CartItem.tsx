@@ -2,6 +2,7 @@ import type { CartItem } from 'i/lib/type';
 import Image from 'next/image';
 import { useCart } from './providers/CartProvider';
 import Link from 'next/link';
+import Checkout from '../Checkout';
 
 export default function CartDisplay() {
   const { cart } = useCart();
@@ -63,6 +64,7 @@ export function CartItem({ item }: { item: CartItem }) {
         </div>
         <button className="flex w-full items-center justify-center rounded-md border border-black">Remove</button>
       </div>
+
     </div>
   );
 }

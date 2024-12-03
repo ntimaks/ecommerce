@@ -6,6 +6,7 @@ import Cart from '../../public/icons/cart';
 import CartDisplay from './Cart/CartItem';
 import type { CartItem as CartItemType } from 'i/lib/type';
 import { useCart } from './Cart/providers/CartProvider';
+import Checkout from './Checkout';
 export default function CartSidebar() {
   const { cart } = useCart();
   return (
@@ -16,6 +17,7 @@ export default function CartSidebar() {
       <SheetContent side="right" className="min-w-[550px] pt-10">
         <h1 className="text-lg font-bold">Shopping Cart</h1>
         <CartDisplay />
+        <Checkout />
       </SheetContent>
     </Sheet>
   );
