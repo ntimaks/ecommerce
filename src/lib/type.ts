@@ -24,7 +24,6 @@ export interface ProductDB {
   reviews: Review[];
 }
 
-
 export interface Stock {
   size: 'XS' | 'S' | 'M' | 'L' | 'XL';
   quantity: number;
@@ -39,6 +38,19 @@ export interface Review {
 export interface CartItem {
   product: ProductDB;
   image: string | undefined;
+  quantity: number;
+  size: Stock['size'];
+}
+
+export interface FetchCartResponse {
+  cart_id: string;
+  products: ProductType[];
+  user_id: string;
+  _id: string;
+}
+
+export interface ProductType {
+  product_id: string;
   quantity: number;
   size: Stock['size'];
 }

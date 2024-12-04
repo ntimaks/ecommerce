@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ProductDB, type Product } from 'i/lib/type';
+import type { ProductDB, Product } from 'i/lib/type';
 import ProductListing from 'i/components/Store/ProductListing';
 
 export default function Store() {

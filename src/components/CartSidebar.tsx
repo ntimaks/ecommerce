@@ -11,13 +11,13 @@ export default function CartSidebar() {
   const { cart } = useCart();
   return (
     <Sheet>
-      <SheetTrigger >
+      <SheetTrigger>
         <Cart color="black" size={50} className="origin-top-right scale-[.60] lg:scale-100" />
       </SheetTrigger>
       <SheetContent side="right" className="min-w-[550px] pt-10">
         <h1 className="text-lg font-bold">Shopping Cart</h1>
         <CartDisplay />
-        <Checkout />
+        {cart.length > 0 ? <Checkout /> : <div>No items in cart!</div>}
       </SheetContent>
     </Sheet>
   );
