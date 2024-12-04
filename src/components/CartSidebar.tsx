@@ -3,7 +3,7 @@
 import { Sheet, SheetContent, SheetTrigger } from '../components/ui/sheet';
 import Link from 'next/link';
 import Cart from '../../public/icons/cart';
-import CartDisplay from './Cart/CartItem';
+import CartDisplay from './Cart/CartDisplay';
 import type { CartItem as CartItemType } from 'i/lib/type';
 import { useCart } from './Cart/providers/CartProvider';
 import Checkout from './Checkout';

@@ -1,32 +1,17 @@
-import type { CartItem } from 'i/lib/type';
 import Image from 'next/image';
+import type { CartItem } from 'i/lib/type';
 import { useCart } from './providers/CartProvider';
-import Link from 'next/link';
-import Checkout from '../Checkout';
 
-export default function CartDisplay() {
-  const { cart } = useCart();
-  return cart.length > 0 ? (
-    <div className="flex max-h-[50dvh] flex-col gap-2 overflow-y-auto pt-6">
-      {cart.map((item) => (
-        <CartItem key={item.product.product_id} item={item} />
-      ))}
-    </div>
-  ) : (
-    <div className="flex w-full flex-col items-center justify-center gap-2 pt-8">
-      <h1 className="text-lg font-medium">No items in cart!</h1>
-      <p className="text-sm text-muted-foreground">
-        Check out our products{' '}
-        <Link className="underline underline-offset-2" href="/store">
-          here
-        </Link>
-      </p>
-      <button onClick={() => console.log(cart)}>test</button>
-    </div>
-  );
-}
 export function CartItem({ item }: { item: CartItem }) {
+  const { removeFromCart } = useCart();
+
   const total = item.product.price * item.quantity;
+
+  const handleRemove = () => {
+    removeFromCart(item);
+  };
+
+
   return (
     <div className="grid grid-cols-3 grid-rows-1 gap-2 border-b border-muted-foreground py-4">
       <div className="col-span-1">
@@ -62,7 +47,7 @@ export function CartItem({ item }: { item: CartItem }) {
             </p>
           </div>
         </div>
-        <button className="flex w-full items-center justify-center rounded-md border border-black">Remove</button>
+        <button className="flex w-full items-center justify-center border border-black" onClick={handleRemove}>Remove</button>
       </div>
 
     </div>

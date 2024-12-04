@@ -151,7 +151,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (item: CartItem) => {
-    setCart(cart.filter((cartItem) => cartItem.product.product_id !== item.product.product_id));
+    setCart(cart.filter((cartItem) =>
+      cartItem.product.product_id !== item.product.product_id || cartItem.size !== item.size
+    ));
   };
 
   const calculateTotal = () => {
