@@ -100,6 +100,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [cart]);
 
   // Update Cart in DB
+  // TODO: Move this into @addToCart below
   useEffect(() => {
     const stored_user_id = localStorage.getItem('user_id');
     const stored_cart_id = localStorage.getItem('cart_id');
