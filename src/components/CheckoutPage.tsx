@@ -75,7 +75,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-md bg-white p-2">
+    <form onSubmit={handleSubmit} className="flex w-1/2 flex-col gap-4 rounded-md bg-white p-2">
       {clientSecret && <PaymentElement />}
 
       {errorMessage && <div>{errorMessage}</div>}
