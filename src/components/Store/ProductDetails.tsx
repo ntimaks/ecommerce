@@ -83,7 +83,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`relative aspect-square w-20 flex-shrink-0 border-2 ${
+                  className={`relative size-20 flex-shrink-0 border-2 ${
                     index === currentImageIndex ? 'border-black' : 'border-transparent'
                   }`}
                 >

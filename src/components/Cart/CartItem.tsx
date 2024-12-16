@@ -1,15 +1,17 @@
 import Image from 'next/image';
 import type { CartItem } from 'i/lib/type';
 import { useCart } from './providers/CartProvider';
+import { Minus, Plus } from 'lucide-react';
 
 export function CartItem({ item }: { item: CartItem }) {
-  const { removeFromCart } = useCart();
+  const { removeFromCart, updateCart } = useCart();
 
   const total = item.product.price * item.quantity;
 
   const handleRemove = () => {
     removeFromCart(item);
   };
+
 
 
   return (
@@ -39,17 +41,25 @@ export function CartItem({ item }: { item: CartItem }) {
             <p>
               <strong>Size:</strong> {item.size}
             </p>
-            <p>
-              <strong>Quantity:</strong> {item.quantity}
-            </p>
+            <div className="flex items-center gap-2">
+              <strong>Quantity:</strong>
+              <button onClick={() => updateCart(item, 'decrement')}>
+                <Minus />
+              </button>
+              {item.quantity}
+              <button onClick={() => updateCart(item, 'increment')}>
+                <Plus />
+              </button>
+            </div>
             <p>
               <strong>Total:</strong> ${total.toFixed(2)}
             </p>
           </div>
         </div>
-        <button className="flex w-full items-center justify-center border border-black" onClick={handleRemove}>Remove</button>
+        <button className="flex w-full items-center justify-center border border-black" onClick={handleRemove}>
+          Remove
+        </button>
       </div>
-
     </div>
   );
 }

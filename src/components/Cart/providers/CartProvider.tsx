@@ -7,22 +7,26 @@ export interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
-  calculateTotal: () => number;
+  calculateTotal: (item?: CartItem) => number;
   addingToCart: boolean;
+  updateCart: (item: CartItem, change: 'increment' | 'decrement') => void;
 }
 
 export const CartContext = createContext<CartContextType>({
-  cart: [],
+  cart: [] as CartItem[],
   addToCart: (item: CartItem) => {
     return;
   },
   removeFromCart: (item: CartItem) => {
     return;
   },
-  calculateTotal: () => {
+  calculateTotal: (item?: CartItem) => {
     return 0;
   },
   addingToCart: false,
+  updateCart: (item: CartItem, change: 'increment' | 'decrement') => {
+    return;
+  },
 });
 
 export const useCart = () => {
@@ -41,12 +45,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const stored_cart_id = localStorage.getItem('cart_id');
 
     if (!stored_user_id) {
-      const new_user_id = crypto.randomUUID();
+      const new_user_id = 'NikoHyTest';
       localStorage.setItem('user_id', new_user_id);
       setUser_id(new_user_id);
-    }
-
-    if (user_id) {
+    } else {
       if (!stored_cart_id || !cart_id) {
         const new_cart_id = crypto.randomUUID();
         localStorage.setItem('cart_id', new_cart_id);
@@ -56,79 +58,55 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    const cart_instance: CartItem[] = [];
-    async function fetchCart() {
-      console.log(stored_cart_id);
-      console.log(stored_user_id);
+    if (cart_id) {
+      setCart_id(cart_id);
+    } else {
+      setCart_id('6750bcc1e39cc82e9a3e7d83');
+      localStorage.setItem('cart_id', '6750bcc1e39cc82e9a3e7d83');
+    }
+
+    const fetchCart = async () => {
+      const stored_cart_id = localStorage.getItem('cart_id');
+      const stored_user_id = localStorage.getItem('user_id');
+
       try {
         const res = await fetch(`/api/cart/getCart?cart_id=${stored_cart_id}`);
         const data = (await res.json()) as FetchCartResponse[];
-        try {
-          // Cart Instance : ID, Quantity, Size
-          const products = data?.[0]?.products.map(async (product: ProductType) => {
+
+        const cartItems = await Promise.all(
+          (data?.[0]?.products || []).map(async (product: ProductType) => {
             const res = await fetch(`/api/products?id=${product.product_id}`);
-            const data = (await res.json()) as ProductDB[];
-            console.log('RPPOODDUCTS', data);
-            const productData = data[0];
-            if (productData) {
-              cart_instance.push({
-                product: productData,
-                image: productData.images[0],
+            const productData = (await res.json()) as ProductDB[];
+
+            if (productData[0]) {
+              return {
+                product: productData[0],
+                image: productData[0].images[0],
                 quantity: product.quantity,
                 size: product.size,
-              });
+              };
             } else {
               console.error('Product data is undefined');
+              return null;
             }
-          });
+          })
+        );
 
-          console.log('CART INSTANCE', cart_instance);
-          setCart(cart_instance);
-          setIsCartFetched(true);
-        } catch (error) {
-          throw error;
-        }
+        // Filter out any null values in case of errors
+        const validCartItems = cartItems.filter((item) => item !== null) as CartItem[];
+
+        setCart(validCartItems);
+        setIsCartFetched(true);
       } catch (error) {
-        throw error;
+        console.error('Failed to fetch cart', error);
       }
-    }
+    };
+
     fetchCart().catch(console.error);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
-
-  // Update Cart in DB
-  // TODO: Move this into @addToCart below
-  useEffect(() => {
-    const stored_user_id = localStorage.getItem('user_id');
-    const stored_cart_id = localStorage.getItem('cart_id');
-
-    if (!isCartFetched) return;
-
-    const cart_body_items = cart.map((item) => {
-      return {
-        product_id: item.product.product_id,
-        quantity: item.quantity,
-        size: item.size,
-      };
-    });
-
-    console.log('CART BODY ITEMS', cart_body_items);
-    const cart_body = {
-      cart_id: stored_cart_id,
-      products: cart_body_items,
-      user_id: stored_user_id,
-    };
-
-    const updateCart = async () => {
-      const res = await fetch(`/api/cart/updateCart?cart_id=${stored_cart_id}`, {
-        method: 'PUT',
-        body: JSON.stringify(cart_body),
-      });
-    };
-    updateCart().catch(console.error);
   }, [cart]);
 
   const addToCart = (item: CartItem) => {
@@ -137,32 +115,95 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         (cartItem) => cartItem.product.product_id === item.product.product_id && cartItem.size === item.size
       );
 
+      let updatedCart;
       if (existingItemIndex !== -1) {
-        const updatedCart = [...prevCart];
+        updatedCart = [...prevCart];
         updatedCart[existingItemIndex] = {
           ...updatedCart[existingItemIndex]!,
           quantity: updatedCart[existingItemIndex]!.quantity + item.quantity,
         };
-        return updatedCart;
       } else {
-        return [...prevCart, item];
+        updatedCart = [...prevCart, item];
       }
+
+      // Update the cart in the database
+      updateCartInDB(updatedCart);
+      return updatedCart;
     });
   };
 
   const removeFromCart = (item: CartItem) => {
-    setCart(cart.filter((cartItem) =>
-      cartItem.product.product_id !== item.product.product_id || cartItem.size !== item.size
-    ));
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter(
+        (cartItem) => cartItem.product.product_id !== item.product.product_id || cartItem.size !== item.size
+      );
+
+      // Update the cart in the database
+      updateCartInDB(updatedCart);
+      return updatedCart;
+    });
   };
 
-  const calculateTotal = () => {
-    const total = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-    return total > 0 ? total : 1; // Ensure total is always greater than 0 to avoid IntegrationError
+  function updateCart(item: CartItem, change: 'increment' | 'decrement') {
+    if (change === 'increment') {
+      item.quantity++;
+    } else if (change === 'decrement') {
+      if (item.quantity === 1) {
+        removeFromCart(item);
+      } else {
+        item.quantity--;
+      }
+    }
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((cartItem) =>
+        cartItem.product.product_id === item.product.product_id && cartItem.size === item.size
+          ? { ...cartItem, quantity: item.quantity }
+          : cartItem
+      );
+      updateCartInDB(updatedCart);
+      return updatedCart;
+    });
+  }
+
+  const updateCartInDB = async (updatedCart: CartItem[]) => {
+    const stored_user_id = localStorage.getItem('user_id');
+    const stored_cart_id = localStorage.getItem('cart_id');
+
+    const cart_body_items = updatedCart.map((item) => {
+      return {
+        product_id: item.product.product_id,
+        quantity: item.quantity,
+        size: item.size,
+      };
+    });
+
+    const cart_body = {
+      cart_id: stored_cart_id,
+      products: cart_body_items,
+      user_id: stored_user_id,
+    };
+
+    try {
+      await fetch(`/api/cart/updateCart?cart_id=${stored_cart_id}`, {
+        method: 'PUT',
+        body: JSON.stringify(cart_body),
+      });
+    } catch (error) {
+      console.error('Failed to update cart in DB', error);
+    }
+  };
+
+  const calculateTotal = (item?: CartItem) => {
+    if (!item) {
+      const total = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+      return total > 0 ? total : 1; // Ensure total is always greater than 0 to avoid IntegrationError
+    } else {
+      return item.product.price * item.quantity;
+    }
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, calculateTotal, addingToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, calculateTotal, addingToCart, updateCart }}>
       {children}
     </CartContext.Provider>
   );

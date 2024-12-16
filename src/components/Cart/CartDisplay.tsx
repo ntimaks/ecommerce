@@ -19,7 +19,6 @@ export default function CartDisplay() {
           here
         </Link>
       </p>
-      <button onClick={() => console.log(cart)}>test</button>
     </div>
   );
 }
