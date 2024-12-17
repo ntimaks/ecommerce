@@ -10,6 +10,11 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
   }
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
+  function handleAddressChange(e: any) {
+    if (e.complete) {
+      console.log(e.value.address);
+    }
+  }
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
       <div className="flex h-full w-full items-center justify-center">
@@ -59,7 +64,7 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
             >
               <form action="" className="w-1/2">
                 <h3>Shipping</h3>
-                <AddressElement options={{ mode: 'shipping' }} />
+                <AddressElement onChange={handleAddressChange} options={{ mode: 'shipping' }} />
               </form>
             </Elements>
             <Elements
