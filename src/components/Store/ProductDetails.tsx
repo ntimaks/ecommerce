@@ -12,11 +12,6 @@ interface ProductDetailsProps {
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<Stock['size']>('M');
-  const [quantity, setQuantity] = useState(1);
-  const { cart, addToCart } = useCart();
-
   if (!product) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-white">
@@ -24,6 +19,18 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       </div>
     );
   }
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const { cart, addToCart } = useCart();
+
+  const sizeOrder = ['S', 'M', 'L', 'XL']; // Define your custom order
+  const inventoryKeys = Object.keys(product.inventory).sort((a, b) => {
+    return sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+  });
+
+  const [selectedSize, setSelectedSize] = useState<Stock['size']>(inventoryKeys[0] as Stock['size']);
+
   function handleAddToCart() {
     if (!product) return;
     const cartItem: CartItem = {
@@ -101,18 +108,23 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <p className="leading-relaxed text-neutral-600">{product.description}</p>
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm text-neutral-600">Size</label>
-              <div className="flex gap-2">
-                {['S', 'M', 'L', 'XL'].map((size) => (
-                  <button
-                    key={size}
-                    className={`${selectedSize === size ? 'text-black' : 'text-gray-400 hover:text-gray-600'} transition-color flex h-12 w-12 items-center justify-center text-xl font-medium duration-300 ease-in-out`}
-                    onClick={() => setSelectedSize(size as Stock['size'])}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
+              {inventoryKeys.length > 1 ? (
+                <>
+                  <label className="text-sm text-neutral-600">Size</label>
+                  <div className="flex gap-2">
+                    {inventoryKeys.map((size) => (
+                      <button
+                        key={size}
+                        className={`${selectedSize === size ? 'text-black' : 'text-gray-400 hover:text-gray-600'} transition-color flex h-12 w-12 items-center justify-center text-xl font-medium duration-300 ease-in-out`}
+                        onClick={() => setSelectedSize(size as Stock['size'])}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : null}
+
               <label className="text-sm text-neutral-600">Quantity</label>
               <div className="flex gap-2">
                 {Array.from({ length: 10 }, (_, index) => index + 1).map((qty) => (
@@ -129,7 +141,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             <Button onClick={handleAddToCart} className="w-full">
               Add to Cart
             </Button>
-            <button onClick={() => console.log(cart)}>test</button>
           </div>
         </div>
       </div>

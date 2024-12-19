@@ -1,22 +1,20 @@
-import clientPromise from 'i/lib/mongodb';
+import { createClient } from 'utils/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-    try {
-        const url = new URL(request.url);
-
-        const id = url.searchParams.get('id');
-        const client = clientPromise;
-        const db = client.db('ECommerce');
-
-        let query = {};
-        if (id) {
-            query = { product_id: id };
-        }
-
-        const sample = await db.collection('Products').find(query).sort({ metacritic: -1 }).limit(10).toArray();
-        return NextResponse.json(sample);
-    } catch (e) {
-        console.error(e);
+  const supabase = await createClient();
+  try {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id');
+    if (!id) {
+      const { data: products } = await supabase.from('Products').select();
+      return NextResponse.json({ products, status: 200 });
+    } else {
+      const { data: products } = await supabase.from('Products').select().eq('_id', id);
+      return NextResponse.json({ products, status: 200 });
     }
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+  }
 }

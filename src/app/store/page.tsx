@@ -1,45 +1,27 @@
 'use client';
 import { useEffect, useState } from 'react';
-import type { ProductDB, Product } from 'i/lib/type';
+import type { ProductDB, Product, ProductResponse } from 'i/lib/type';
 import ProductListing from 'i/components/Store/ProductListing';
 import { createClient } from '../../../utils/supabase/server';
 
-export default async function Store() {
-
-  const supabase = await createClient();
-  const { data: Products } = await supabase.from("products").select();
-
+export default function Store() {
   const [products, setProducts] = useState<ProductDB[]>([]);
 
   useEffect(() => {
     async function fetchProducts() {
       const response = await fetch('/api/products');
-      const data: ProductDB[] = (await response.json()) as ProductDB[];
-      setProducts(data);
+      if (response.ok) {
+        const data: ProductResponse = (await response.json()) as ProductResponse;
+        setProducts(data.products);
+      } else {
+        console.error('Failed to fetch products');
+      }
     }
-
-    try {
-      fetchProducts().catch(console.error);
-    } catch (error) {
-      console.error(error);
-    }
+    fetchProducts().catch(console.error);
   }, []);
-  // useEffect(() => {
-  //   async function fetchProducts() {
-  //     const response = await fetch('/api/product');
-  //     const data: { data: Product[] } = (await response.json()) as { data: Product[] };
-  //     setProducts(data.data);
-  //   }
-
-  //   try {
-  //     fetchProducts().catch(console.error);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
 
   return (
-    <div className="min-w-screen max grid min-h-screen grid-cols-2 md:grid-cols-5 gap-4 bg-white px-8 pt-44">
+    <div className="min-w-screen max grid min-h-screen grid-cols-2 gap-4 bg-white px-8 pt-44 md:grid-cols-5">
       {products.map((product) => (
         <ProductListing key={product._id} product={product} />
       ))}
