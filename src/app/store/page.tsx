@@ -2,8 +2,13 @@
 import { useEffect, useState } from 'react';
 import type { ProductDB, Product } from 'i/lib/type';
 import ProductListing from 'i/components/Store/ProductListing';
+import { createClient } from '../../../utils/supabase/server';
 
-export default function Store() {
+export default async function Store() {
+
+  const supabase = await createClient();
+  const { data: Products } = await supabase.from("products").select();
+
   const [products, setProducts] = useState<ProductDB[]>([]);
 
   useEffect(() => {
