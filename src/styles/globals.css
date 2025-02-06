@@ -117,3 +117,79 @@
   background-size: cover;
   background-position: center;
 }
+
+@font-face {
+  font-family: 'CabinetGrotesk-Variable';
+  src:
+    url('../../public/fonts/CabinetGrotesk-Variable.woff2') format('woff2'),
+    url('../../public/fonts/CabinetGrotesk-Variable.woff') format('woff'),
+    url('../../public/fonts/CabinetGrotesk-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+html {
+  font-family: 'CabinetGrotesk-Variable';
+}
+
+.nav-text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
+}
+
+/* .bg-radial-gradient {
+  animation: radial-gradient 10s linear infinite;
+  background: radial-gradient(circle, #2c2c2c 28%, #111111 100%);
+}
+
+@keyframes radial-gradient {
+  0% {
+    background: radial-gradient(circle, #2c2c2c 28%, #111111 100%);
+    background-position: 0 0;
+  }
+  50% {
+    background: radial-gradient(circle, #2c2c2c 50%, #111111 100%);
+    background-position: 100% 100%;
+  }
+  100% {
+    background: radial-gradient(circle, #2c2c2c 28%, #111111 100%);
+    background-position: 0 0;
+  }
+} */
+
+/* 2c2c2c */
+
+@keyframes changeSize {
+  0%,
+  100% {
+    background: radial-gradient(circle 28%, #2c2c2c 28%, #111111 100%);
+  }
+  50% {
+    background: radial-gradient(circle 50%, #2c2c2c 50%, #111111 100%);
+  }
+}
+@keyframes move {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.bg-breathe-move {
+  background: radial-gradient(circle, #2c2c2c 28%, #111111 100%);
+  animation:
+    changeSize 6s ease-in-out infinite,
+    move 24s linear infinite;
+  background-size: 200% 200%;
+}
