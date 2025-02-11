@@ -73,9 +73,8 @@ function NavPillButton({
       <a
         href="#"
         ref={ref}
-        className={`nav-text-shadow relative z-10 flex items-center justify-center rounded-full border border-transparent bg-transparent px-4 py-2 font-bold transition-all duration-300 ease-in-out hover:border-white ${
-          isActive ? 'text-black' : 'hover:bg-smoke/50 text-white'
-        }`}
+        className={`nav-text-shadow relative z-10 flex items-center justify-center rounded-full border border-transparent bg-transparent px-4 py-2 font-bold transition-all duration-300 ease-in-out hover:border-white ${isActive ? 'text-black' : 'hover:bg-smoke/50 text-white'
+          }`}
         onClick={onClick}
       >
         {text}
@@ -86,9 +85,8 @@ function NavPillButton({
       <a
         href="#"
         ref={ref}
-        className={`relative z-10 flex items-center justify-center gap-2 rounded-full border border-transparent bg-transparent px-4 py-2 font-bold transition-all duration-300 ease-in-out hover:border-white ${
-          isActive ? 'text-black' : 'hover:bg-smoke/50 text-white'
-        }`}
+        className={`relative z-10 flex items-center justify-center gap-2 rounded-full border border-transparent bg-transparent px-4 py-2 font-bold transition-all duration-300 ease-in-out hover:border-white ${isActive ? 'text-black' : 'hover:bg-smoke/50 text-white'
+          }`}
         onClick={onClick}
       >
         <AnimatePresence>
