@@ -11,12 +11,6 @@ const thumbnails = [
   { src: image3, alt: "Nature thumbnail 3" },
 ]
 
-const colors = [
-  { name: "Purple", class: "bg-purple-400" },
-  { name: "Olive", class: "bg-green-600" },
-  { name: "Orange", class: "bg-orange-400" },
-  { name: "Black", class: "bg-black" },
-]
 
 export default function Page() {
 
