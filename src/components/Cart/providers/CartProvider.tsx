@@ -45,7 +45,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const stored_cart_id = localStorage.getItem('cart_id');
 
     if (!stored_user_id) {
-      const new_user_id = '378d4b75-c2b3-41dd-87a7-43f3170066ea';
+      const new_user_id = '3a385f39-35a2-45da-87e3-cb35d518a88d';
       localStorage.setItem('user_id', new_user_id);
       setUser_id(new_user_id);
     } else {

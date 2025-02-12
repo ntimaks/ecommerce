@@ -37,7 +37,7 @@ export function CartDropdownItem({ item }: { item: CartItem }) {
           </div>
         </article>
       </div>
-      <div className="flex items-center gap-2 rounded-full bg-lime p-2 font-bold shadow-md">
+      <div className="flex items-center gap-2 rounded-full bg-lime p-2 font-bold text-black shadow-md">
         <button onClick={() => updateCart(item, 'decrement')}>
           <Minus />
         </button>

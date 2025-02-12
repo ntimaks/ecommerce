@@ -5,6 +5,7 @@ import { Input } from 'i/components/ui/input';
 import { Label } from 'i/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from 'i/components/ui/popover';
 import { ShoppingBag } from 'lucide-react';
+import Link from 'next/link';
 
 export function CartDropdown() {
   const { cart, updateCart, removeFromCart, calculateTotal } = useCart();
@@ -28,6 +29,11 @@ export function CartDropdown() {
           {cart.map((item) => (
             <CartDropdownItem item={item} />
           ))}
+          <Link href="/checkout">
+            <Button className="w-full border border-transparent bg-lime font-bold text-black hover:bg-smoke/80">
+              Checkout
+            </Button>
+          </Link>
         </div>
       </PopoverContent>
     </Popover>

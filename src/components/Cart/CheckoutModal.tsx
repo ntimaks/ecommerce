@@ -28,28 +28,6 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
           <h1>Checkout</h1>
 
           <div className="flex w-full flex-row gap-4">
-            {/* <form action="" className="flex w-1/2 flex-col gap-4 rounded-md bg-white p-2">
-              <div className="flex w-full flex-col">
-                <label htmlFor="email">Email:</label>
-                <div className="flex w-full flex-row items-center gap-4">
-                  <input type="email" className="w-full rounded-md border p-1 px-2" placeholder="user@gmail.com" />
-                  <button className="w-fit whitespace-nowrap rounded-md bg-gray-300 px-4 py-1 text-black transition-colors duration-300 hover:bg-muted-foreground">
-                    Log In
-                  </button>
-                  <button className="w-fit rounded-md border border-gray-500 px-4 py-1 text-black transition-colors duration-300 hover:bg-muted-foreground">
-                    Guest
-                  </button>
-                </div>
-              </div>
-              <h1>Shipping Address</h1>
-              <h1>First Name</h1>
-              <h1>Last Name</h1>
-              <h1>street Address</h1>
-              <h1>City</h1>
-              <h1>State</h1>
-              <h1>Zip</h1>
-              <h1>phone number</h1>
-            </form> */}
             <Elements
               stripe={stripePromise}
               options={{

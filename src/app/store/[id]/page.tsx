@@ -1,7 +1,11 @@
 import ProductDetails from 'i/components/Store/ProductDetails';
 import { type ProductResponse } from 'i/lib/type';
 
-export default async function Page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const productID = id as string;
 
