@@ -1,5 +1,6 @@
 import { ShoppingBag, User } from 'lucide-react';
 import LangDropdown from './lang-dropdown';
+import { CartDropdown } from './cart-dropdown';
 
 export default function AccountPill() {
   return (
@@ -11,9 +12,7 @@ export default function AccountPill() {
       <div className="bg-transparent px-3 py-2 transition-colors duration-300 ease-in-out hover:bg-white/50">
         <User />
       </div>
-      <div className="rounded-r-full bg-transparent px-2 py-2 pr-4 transition-colors duration-300 ease-in-out hover:bg-white/50">
-        <ShoppingBag />
-      </div>
+      <CartDropdown />
     </div>
   );
 }

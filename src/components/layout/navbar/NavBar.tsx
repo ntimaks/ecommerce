@@ -1,13 +1,6 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import SearchPopup from '../../SearchPopop';
-import Menu from '../../Menu';
-import CartSidebar from '../../CartSidebar';
-import LoginButton from '../../LogInButton';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Search } from 'lucide-react';
-import NavPill from './nav-pill';
 import AccountPill from './account-pill';
+import NavPill from './nav-pill';
 
 const NavBar = () => {
   return (
