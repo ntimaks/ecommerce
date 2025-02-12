@@ -22,7 +22,7 @@ export default function Store() {
   }, []);
 
   return (
-    <div className="bg-breathe-move min-h-screen w-screen flex flex-col py-56 px-8">
+    <div className="bg-breathe-move min-h-screen w-screen flex flex-col py-56 px-20">
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
