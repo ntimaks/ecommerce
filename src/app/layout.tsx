@@ -19,7 +19,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="w-screen max-w-[100dvw] overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <CartProvider>
-            <Toaster />
+            <Toaster
+              toastOptions={{
+
+                style: {
+                  background: 'rgba(164, 162, 157, 0.88)',
+                  color: 'rgb(222, 219, 213)',
+                },
+                classNames: {
+
+                },
+              }} />
             <NavBar />
             {children}
             <Footer />
