@@ -66,7 +66,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {/* Left: Image Section */}
         <div className="relative flex h-full w-full flex-col">
           {/* Breadcrumb */}
-          <div className="mx-auto mb-8 w-full max-w-7xl">
+          <div className="mx-auto mb-8 w-full max-w-7xl ">
             <nav className="space-x-2 text-[#DEDBD5]">
               <a href="/shop" className="hover:text-[#D2F34C]">
                 Shop
@@ -86,23 +86,23 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               src={product.images[currentImageIndex] ?? ''}
               alt={`${product.name} - Image ${currentImageIndex + 1}`}
               fill
-              className="object-contain"
+              className="object-contain "
               priority
             />
             {/* Thumbnail Navigation */}
-            <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 rounded-2xl border border-[#DEDBD5] bg-smoke/50 p-2">
+            <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 rounded-2xl border border-[#DEDBD5] bg-smoke/50 p-2 nav-text-shadow">
               {product.images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`size-8 overflow-hidden rounded-full border border-[#DEDBD5] bg-smoke/50 transition-colors ${currentImageIndex === index ? 'border-[#D2F34C]' : ''}`}
+                  className={`size-10 overflow-hidden rounded-full border bg-smoke/50 shadow-md transition-colors ${currentImageIndex === index ? 'border-lime bg-lime/30 size-10 ' : 'border-[#DEDBD5]'}`}
                   style={{ backgroundImage: `url(${product.images[index]})`, backgroundSize: 'cover' }}
                 />
               ))}
             </div>
 
             {/* Navigation Arrows */}
-            <div className="absolute bottom-6 left-6 right-6 flex justify-between">
+            <div className="absolute bottom-6 left-6 right-6 flex justify-between ">
               <ArrrowButton direction="left" onClick={prevImage} />
               <ArrrowButton direction="right" onClick={nextImage} />
             </div>
@@ -133,9 +133,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
           <div className="rounded-3xl border border-[#DEDBD5] bg-smoke/50 p-6">
             <div className="space-y-6">
-              <div className="nav-text-shadow h-0.5 w-full bg-[#DEDBD5]"></div>
+              <div className=" h-0.5 w-full bg-[#DEDBD5]"></div>
               <div>
-                <div className="nav-text-shadow mb-4 flex justify-between">
+                <div className=" mb-4 flex justify-between">
                   <span className="font-bold text-[#DEDBD5]">Find your size</span>
                   <div className="flex flex-col text-right">
                     <span className="font-bold text-[#DEDBD5]">Out of stock?</span>
@@ -147,11 +147,10 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size as Stock['size'])}
-                      className={`flex h-12 w-12 items-center justify-center rounded-full border text-[#DEDBD5] transition-colors ${
-                        selectedSize === size
-                          ? 'border-[#D2F34C] bg-[#D2F34C] text-black'
-                          : 'border-[#DEDBD5] bg-smoke/50 hover:bg-smoke/70'
-                      }`}
+                      className={`flex shadow-md h-12 w-12 items-center text-xl justify-center rounded-full border text-[#DEDBD5] transition-colors ${selectedSize === size
+                        ? 'border-lime bg-lime font-bold text-black'
+                        : 'border-[#DEDBD5] bg-smoke/50 hover:bg-lime/30 hover:text-lime hover:border-lime'
+                        }`}
                     >
                       {size}
                     </button>

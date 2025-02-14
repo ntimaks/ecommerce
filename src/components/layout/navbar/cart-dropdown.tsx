@@ -18,7 +18,7 @@ export function CartDropdown() {
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className="absolute -right-3 mt-2 min-w-fit rounded-[20px] border-smoke bg-smoke/50 backdrop-blur-sm"
+        className="absolute -right-3 mt-2 min-w-fit rounded-[20px] border-smoke bg-smoke/50 backdrop-blur-sm shadow-lg"
         side="bottom"
       >
         <div className="grid gap-4">
@@ -30,7 +30,7 @@ export function CartDropdown() {
             <CartDropdownItem key={index} item={item} />
           ))}
           <Link href="/checkout">
-            <Button className="w-full border border-transparent bg-lime font-bold text-black hover:bg-smoke/80">
+            <Button className="w-full rounded-full border border-transparent bg-lime font-bold text-black hover:bg-lime/80 shadow-md">
               Checkout
             </Button>
           </Link>

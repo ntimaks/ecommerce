@@ -10,9 +10,9 @@ export default function ArrowButton({ direction = 'right', className, ...props }
     return (
         <button
             {...props}
-            className={`w-10 h-10 nav-text-shadow rounded-full bg-smoke/50 text-black font-medium transition-colors border border-[#DEDBD5] flex items-center justify-center ${className || ''}`}
+            className={`w-10 h-10 shadow-md rounded-full bg-smoke/50 text-black font-medium transition-colors border border-[#DEDBD5] flex items-center justify-center ${className || ''}`}
         >
-            <Arrow className={`nav-text-shadow ${transform}`} color="#DEDBD5" />
+            <Arrow className={` ${transform}`} color="#DEDBD5" />
         </button>
     );
 }
