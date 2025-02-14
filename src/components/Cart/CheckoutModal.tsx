@@ -32,7 +32,7 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
               stripe={stripePromise}
               options={{
                 appearance: {
-                  theme: 'stripe',
+                  theme: 'flat',
                   variables: {
                     colorPrimary: '#000000',
                     colorText: '#000000',
@@ -40,10 +40,7 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
                 },
               }}
             >
-              <form action="" className="w-1/2">
-                <h3>Shipping</h3>
-                <AddressElement onChange={handleAddressChange} options={{ mode: 'shipping' }} />
-              </form>
+
             </Elements>
             <Elements
               stripe={stripePromise}

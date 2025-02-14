@@ -26,8 +26,8 @@ export function CartDropdown() {
             <h4 className="font-medium leading-none text-lime">Cart</h4>
             <p className="text-sm text-muted">Review your cart before checking out.</p>
           </div>
-          {cart.map((item) => (
-            <CartDropdownItem item={item} />
+          {cart.map((item, index) => (
+            <CartDropdownItem key={index} item={item} />
           ))}
           <Link href="/checkout">
             <Button className="w-full border border-transparent bg-lime font-bold text-black hover:bg-smoke/80">
