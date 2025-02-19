@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { AddressElement, Elements } from '@stripe/react-stripe-js';
 
@@ -16,13 +16,33 @@ export default function ShippingAddressForm() {
       <h1 className="text-2xl font-bold">Shipping Address</h1>
       <div className="flex flex-col justify-between gap-4 rounded-[20px] border border-smoke bg-smoke/50 p-4 backdrop-blur-sm">
         <div className="flex flex-col gap-4">
-          <AddressElement onChange={handleAddressChange} options={{
-
-
-            mode: 'shipping',
-            blockPoBox: true,
-            contacts: [
-              {
+          <AddressElement
+            onChange={handleAddressChange}
+            options={{
+              mode: 'shipping',
+              blockPoBox: true,
+              contacts: [
+                {
+                  name: 'Jane Doe',
+                  address: {
+                    line1: '354 Oyster Point Blvd',
+                    line2: '',
+                    city: 'South San Francisco',
+                    state: 'CA',
+                    postal_code: '94080',
+                    country: 'US',
+                  },
+                },
+              ],
+              fields: {
+                phone: 'always',
+              },
+              validation: {
+                phone: {
+                  required: 'always',
+                },
+              },
+              defaultValues: {
                 name: 'Jane Doe',
                 address: {
                   line1: '354 Oyster Point Blvd',
@@ -33,27 +53,8 @@ export default function ShippingAddressForm() {
                   country: 'US',
                 },
               },
-            ],
-            fields: {
-              phone: 'always',
-            },
-            validation: {
-              phone: {
-                required: "always",
-              },
-            },
-            defaultValues: {
-              name: 'Jane Doe',
-              address: {
-                line1: '354 Oyster Point Blvd',
-                line2: '',
-                city: 'South San Francisco',
-                state: 'CA',
-                postal_code: '94080',
-                country: 'US',
-              },
-            },
-          }} />
+            }}
+          />
         </div>
       </div>
     </div>

@@ -42,7 +42,6 @@ export default function CartOverview() {
             Checkout
           </button>
           {openCheckout && <CheckoutModal setIsOpen={setOpenCheckout} amount={Number(total)} />}
-
         </div>
       </div>
     </div>

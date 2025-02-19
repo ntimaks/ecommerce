@@ -18,14 +18,14 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
       <div className="flex h-full w-full items-center justify-center">
-        <div className="container relative h-full max-h-[50dvh] w-full rounded-md bg-white p-4">
+        <div className="container relative h-full min-h-fit w-full rounded-md bg-white p-4">
           <button
             className="absolute right-2 top-2 rounded-full bg-inherit p-1 transition-colors duration-300 hover:bg-gray-400"
             onClick={() => setIsOpen(false)}
           >
             <X />
           </button>
-          <h1>Checkout</h1>
+          <h1 className="font-bold text-black">Checkout</h1>
 
           <div className="flex w-full flex-row gap-4">
             <Elements
@@ -39,9 +39,7 @@ export default function CheckoutModal({ setIsOpen, amount }: { setIsOpen: (isOpe
                   },
                 },
               }}
-            >
-
-            </Elements>
+            ></Elements>
             <Elements
               stripe={stripePromise}
               options={{
