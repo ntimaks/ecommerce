@@ -1,21 +1,20 @@
-import clientPromise from 'i/lib/mongodb';
 import { NextResponse } from 'next/server';
+import { createClient } from 'utils/supabase/server';
 
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
-
     const cart_id = url.searchParams.get('cart_id');
-    const client = clientPromise;
-    const db = client.db('ECommerce');
 
-    let query = {};
-    if (cart_id) {
-      query = { cart_id: cart_id };
+    const supabase = await createClient();
+    const { data, error } = await supabase.from('Carts').select('*').eq('cart_id', cart_id);
+
+    if (error) {
+      console.error(error);
+      return NextResponse.json({ error: 'Failed to fetch cart data' }, { status: 500 });
     }
 
-    const sample = await db.collection('Carts').find(query).toArray();
-    return NextResponse.json(sample);
+    return NextResponse.json(data);
   } catch (e) {
     console.error(e);
   }

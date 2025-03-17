@@ -34,7 +34,7 @@ export default function Checkout() {
             amount: convertToSubcurrency(Number(amount.toFixed(2))),
             currency: 'usd',
             appearance: {
-              theme: 'stripe',
+              theme: 'flat',
               variables: {
                 colorPrimary: '#000000',
                 colorText: '#000000',

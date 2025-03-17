@@ -2,11 +2,10 @@ import 'i/styles/globals.css';
 
 import { type Metadata } from 'next';
 import { ThemeProvider } from 'i/components/theme-provider';
-import { Archivo } from 'next/font/google';
-import NavBar from 'i/components/NavBar';
+import NavBar from 'i/components/layout/navbar/NavBar';
 import { CartProvider } from 'i/components/Cart/providers/CartProvider';
-const archivo = Archivo({ subsets: ['latin'] });
 import { Toaster } from 'sonner';
+import Footer from 'i/components/layout/footer/footer';
 
 export const metadata: Metadata = {
   title: 'Web Shop App',
@@ -15,14 +14,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={archivo.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head />
-      <body>
+      <body className="w-screen max-w-[100dvw] overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <CartProvider>
-            <Toaster />
+            <Toaster
+              toastOptions={{
+
+                style: {
+                  background: 'rgba(164, 162, 157, 0.88)',
+                  color: 'rgb(222, 219, 213)',
+                },
+                classNames: {
+
+                },
+              }} />
             <NavBar />
             {children}
+            <Footer />
           </CartProvider>
         </ThemeProvider>
       </body>

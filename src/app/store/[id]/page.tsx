@@ -1,27 +1,22 @@
-'use client';
-
 import ProductDetails from 'i/components/Store/ProductDetails';
-import { type ProductDB } from 'i/lib/type';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { type ProductResponse } from 'i/lib/type';
 
-export default function Page() {
-  const [product, setProduct] = useState<ProductDB[]>([]);
-  const params = useParams();
-  const productID = params.id as string;
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
-  useEffect(() => {
-    async function fetchProduct() {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-      const response = await fetch(`${baseUrl}/api/products?id=${productID}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch product');
-      }
-      const data = (await response.json()) as ProductDB[];
-      setProduct(data);
-    }
-    fetchProduct().catch(console.error);
-  }, [productID]);
+export default async function Page({ params }: PageProps) {
+  const { id } = await params;
+  const productID = id as string;
 
-  return <ProductDetails product={product[0]} />;
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const response = await fetch(`${baseUrl}/api/products?id=${productID}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch product');
+  }
+  const data = (await response.json()) as ProductResponse;
+
+  return <ProductDetails product={data.products[0]} />;
 }

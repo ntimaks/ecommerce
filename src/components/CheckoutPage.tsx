@@ -14,7 +14,8 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   useEffect(() => {
     const fetchPaymentIntent = async () => {
       try {
-        const response = await fetch('/api/create-payment-intent', {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+        const response = await fetch(`${baseUrl}/api/create-payment-intent`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -47,25 +48,31 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       return;
     }
 
+    console.log('Stripe loaded');
     const submitResult = await elements.submit();
-
+    console.log('Submit result:', submitResult);
     if (submitResult.error) {
       setErrorMessage(submitResult.error.message);
       setLoading(false);
       return;
     }
 
-    const paymentResult = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `${process.env.NEXT_PUBLIC_API_URL}/payment-success?amount=${amount}`,
-      },
-    });
-
-    if (paymentResult.error) {
-      setErrorMessage(paymentResult.error.message);
+    console.log('Stripe about to confirm payment');
+    try {
+      const paymentResult = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${process.env.NEXT_PUBLIC_API_URL}/payment-success?amount=${amount}`,
+        },
+      });
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+      setErrorMessage('Payment failed. Please try again.');
+      setLoading(false);
+      return;
     }
+    console.log('Stripe confirmed payment');
 
     setLoading(false);
   };
@@ -75,7 +82,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-1/2 flex-col gap-4 rounded-md bg-white p-2">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4 rounded-md bg-white p-2">
       {clientSecret && <PaymentElement />}
 
       {errorMessage && <div>{errorMessage}</div>}

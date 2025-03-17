@@ -12,6 +12,10 @@ export interface Rating {
   count: number;
 }
 
+export interface ProductResponse {
+  products: ProductDB[];
+  status: number;
+}
 export interface ProductDB {
   _id: string;
   product_id: string;
@@ -25,7 +29,7 @@ export interface ProductDB {
 }
 
 export interface Stock {
-  size: 'XS' | 'S' | 'M' | 'L' | 'XL';
+  size: 'XS' | 'S' | 'M' | 'L' | 'XL' | number;
   quantity: number;
 }
 
@@ -43,6 +47,7 @@ export interface CartItem {
 }
 
 export interface FetchCartResponse {
+  
   cart_id: string;
   products: ProductType[];
   user_id: string;

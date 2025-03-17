@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import imageDetails from './constants/imageDetails.json';
 import ImageDisplay from 'i/components/Hero/ImageDisplay';
-import { type ProductDB } from 'i/lib/type';
+import { type ProductDB, type ProductResponse } from 'i/lib/type';
 import ProductDetails from 'i/components/Store/ProductDetails';
 export default function HomePage() {
   const [currentImage, setCurrentImage] = useState('aorist');
@@ -13,8 +13,12 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       const response = await fetch('/api/products');
-      const data: ProductDB[] = (await response.json()) as ProductDB[];
-      setProducts(data);
+      if (response.ok) {
+        const data: ProductResponse = (await response.json()) as ProductResponse;
+        setProducts(data.products);
+      } else {
+        console.error('Failed to fetch products');
+      }
     }
     fetchProducts().catch(console.error);
   }, []);

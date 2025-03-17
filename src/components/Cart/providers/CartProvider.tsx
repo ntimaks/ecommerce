@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import type { CartItem, FetchCartResponse, ProductDB, ProductType } from 'i/lib/type';
+import type { CartItem, FetchCartResponse, ProductDB, ProductResponse, ProductType } from 'i/lib/type';
 
 export interface CartContextType {
   cart: CartItem[];
@@ -45,7 +45,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const stored_cart_id = localStorage.getItem('cart_id');
 
     if (!stored_user_id) {
-      const new_user_id = 'NikoHyTest';
+      const new_user_id = '3a385f39-35a2-45da-87e3-cb35d518a88d';
       localStorage.setItem('user_id', new_user_id);
       setUser_id(new_user_id);
     } else {
@@ -61,8 +61,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     if (cart_id) {
       setCart_id(cart_id);
     } else {
-      setCart_id('6750bcc1e39cc82e9a3e7d83');
-      localStorage.setItem('cart_id', '6750bcc1e39cc82e9a3e7d83');
+      setCart_id('7d398fa7-a550-458c-a204-a1874be4c60f');
+      localStorage.setItem('cart_id', '7d398fa7-a550-458c-a204-a1874be4c60f');
     }
 
     const fetchCart = async () => {
@@ -76,12 +76,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const cartItems = await Promise.all(
           (data?.[0]?.products || []).map(async (product: ProductType) => {
             const res = await fetch(`/api/products?id=${product.product_id}`);
-            const productData = (await res.json()) as ProductDB[];
+            const productData = (await res.json()) as ProductResponse;
 
-            if (productData[0]) {
+            if (productData.products[0]) {
               return {
-                product: productData[0],
-                image: productData[0].images[0],
+                product: productData.products[0],
+                image: productData.products[0].images[0],
                 quantity: product.quantity,
                 size: product.size,
               };
